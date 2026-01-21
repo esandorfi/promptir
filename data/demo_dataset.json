@@ -1,0 +1,23 @@
+[
+  {
+    "id": "planner",
+    "version": "v1",
+    "vars": {
+      "question": "How do we roll back safely?",
+      "evidence": "Runbook section 4.1"
+    },
+    "blocks": {
+      "_rag_context": "Relevant docs: /deploy/rollback"
+    }
+  },
+  {
+    "id": "router",
+    "version": "v1",
+    "vars": {
+      "question": "What is our data retention policy?"
+    },
+    "blocks": {
+      "_rag_context": "See policy-103"
+    }
+  }
+]
