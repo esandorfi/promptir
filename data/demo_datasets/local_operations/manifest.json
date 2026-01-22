@@ -1,0 +1,173 @@
+{
+  "prompts": [
+    {
+      "blocks": {
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "92f922034dac0fdb5b474015385311cb6f2fc7b5706eaef3023b51e5ee84fe26",
+      "id": "local_create_pdf",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou guide the creation of a PDF from local files.\nProvide clear steps, recommended commands, and confirm inputs before execution.",
+          "role": "system"
+        },
+        {
+          "content": "Current directory:\n{{cwd}}\n\nSource paths:\n{{source_paths}}\n\nPDF requirements:\n{{pdf_requirements}}\n\nTool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "local_interaction",
+        "owner": "core",
+        "scope": "pdf_creation"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_tool_hints",
+        "cwd",
+        "output_format",
+        "pdf_requirements",
+        "source_paths"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "368afe0c4417959140b5c3f93484eab7dcb43cda66c5e04fd7eddaa5bc0f915d",
+      "id": "local_find",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou help locate files or folders in the current directory based on criteria.\nProvide precise commands and expected results.",
+          "role": "system"
+        },
+        {
+          "content": "Current directory:\n{{cwd}}\n\nFind criteria:\n{{find_criteria}}\n\nTool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "local_interaction",
+        "owner": "core",
+        "scope": "file_discovery"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_tool_hints",
+        "cwd",
+        "find_criteria",
+        "output_format"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "772a562642ff882a41dc3a7274a928ca17b48425d5599581b410eb1cde281634",
+      "id": "local_grep",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou help a user search for text in local files and summarize findings.\nRespect the current directory scope and return actionable command suggestions.",
+          "role": "system"
+        },
+        {
+          "content": "Current directory:\n{{cwd}}\n\nSearch query:\n{{query}}\n\nFile globs or paths:\n{{file_globs}}\n\nTool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "local_interaction",
+        "owner": "core",
+        "scope": "grep"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_tool_hints",
+        "cwd",
+        "file_globs",
+        "output_format",
+        "query"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "042315d16de887db540667e0397911487a5b26511d24c3e506ba46d56142d2a1",
+      "id": "tool_section",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou draft a tools section that describes available tools and how to use them.\nHighlight safety and policy constraints, and present information clearly.",
+          "role": "system"
+        },
+        {
+          "content": "Tools list:\n{{tools}}\n\nUsage policies:\n{{usage_policies}}\n\nAdditional tool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "documentation",
+        "owner": "core",
+        "scope": "tool_section"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_tool_hints",
+        "output_format",
+        "tools",
+        "usage_policies"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "5c64754634665616055fc72d6c98b506a097d80ec532b9e86783cb01a34c71f0",
+      "id": "workspace_section",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou write a workspace or directory section based on provided metadata.\nSummarize purpose, structure, and notable folders succinctly.",
+          "role": "system"
+        },
+        {
+          "content": "Title:\n{{title}}\n\nDescription:\n{{description}}\n\nDirectory listing:\n{{directory_listing}}\n\nAdditional context:\n{{_rag_context}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "documentation",
+        "owner": "core",
+        "scope": "workspace_section"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "description",
+        "directory_listing",
+        "output_format",
+        "title"
+      ],
+      "version": "v1"
+    }
+  ],
+  "schema_version": 1
+}
