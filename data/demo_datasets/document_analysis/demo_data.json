@@ -1,0 +1,81 @@
+[
+  {
+    "id": "document_analyze_single",
+    "version": "v1",
+    "vars": {
+      "document": "Policy Memo: Employees must notify HR within 5 business days of address changes. The policy is effective immediately and applies to all regions.",
+      "analysis_goal": "Summarize key obligations and effective dates.",
+      "output_format": "Markdown with headings and bullet points."
+    },
+    "blocks": {
+      "_rag_context": "Related doc: HR-101 update log.",
+      "_tool_hints": "Highlight deadlines explicitly."
+    }
+  },
+  {
+    "id": "document_analyze_multi",
+    "version": "v1",
+    "vars": {
+      "documents": "Doc A: The Q2 roadmap prioritizes reliability work and deprecates legacy APIs.\nDoc B: The support guide notes increased tickets for legacy API users.",
+      "analysis_goal": "Identify alignment or conflicts between roadmap and support guidance.",
+      "context_mode": "small",
+      "output_format": "Markdown with a summary and per-document evidence."
+    },
+    "blocks": {
+      "_rag_context": "Customer feedback reports mention deprecation risk.",
+      "_tool_hints": "Cite each document explicitly."
+    }
+  },
+  {
+    "id": "document_analyze_map_reduce",
+    "version": "v1",
+    "vars": {
+      "documents": "Doc 1: Security checklist requires MFA for admin accounts.\nDoc 2: Access policy says MFA is mandatory for privileged roles.\nDoc 3: Incident report notes MFA was disabled for one admin.",
+      "analysis_goal": "Assess MFA compliance across documents.",
+      "map_instructions": "For each document, extract MFA-related requirements or incidents.",
+      "reduce_instructions": "Summarize overall compliance gaps and key evidence.",
+      "output_format": "Structured markdown with map findings and a final synthesis."
+    },
+    "blocks": {
+      "_rag_context": "Audit log references MFA rollout timeline.",
+      "_tool_hints": "Separate map vs reduce sections."
+    }
+  },
+  {
+    "id": "document_questions_extract",
+    "version": "v1",
+    "vars": {
+      "document": "Project brief: The team needs to decide rollout sequence, staffing, and budget approval timelines.",
+      "question_types": "Planning, Resourcing, Budget",
+      "output_format": "List questions grouped by type."
+    },
+    "blocks": {
+      "_rag_context": "Stakeholders include product and finance leads."
+    }
+  },
+  {
+    "id": "document_info_verify",
+    "version": "v1",
+    "vars": {
+      "document": "Release notes: Version 2.3 adds audit logging and updates the retention policy to 30 days.",
+      "information_types": "Audit logging support, retention duration, pricing changes",
+      "output_format": "Table with yes/no/partial and citations."
+    },
+    "blocks": {
+      "_rag_context": "Prior version had 14-day retention."
+    }
+  },
+  {
+    "id": "document_diff",
+    "version": "v1",
+    "vars": {
+      "document_a": "Policy v1: Data retained for 14 days. Encryption required at rest.",
+      "document_b": "Policy v2: Data retained for 30 days. Encryption required at rest and in transit.",
+      "comparison_focus": "Retention and encryption requirements",
+      "output_format": "Bullet list of differences and similarities with citations."
+    },
+    "blocks": {
+      "_rag_context": "Compliance team requested explicit encryption in transit."
+    }
+  }
+]

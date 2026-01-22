@@ -1,0 +1,65 @@
+[
+  {
+    "id": "local_grep",
+    "version": "v1",
+    "vars": {
+      "cwd": "/workspace/project",
+      "query": "TODO",
+      "file_globs": "**/*.md",
+      "output_format": "List matches with file paths and line snippets."
+    },
+    "blocks": {
+      "_tool_hints": "Use rg for fast search."
+    }
+  },
+  {
+    "id": "local_find",
+    "version": "v1",
+    "vars": {
+      "cwd": "/workspace/project",
+      "find_criteria": "Files modified in the last 7 days under docs/",
+      "output_format": "Command suggestions with expected output notes."
+    },
+    "blocks": {
+      "_tool_hints": "Prefer find with -mtime."
+    }
+  },
+  {
+    "id": "local_create_pdf",
+    "version": "v1",
+    "vars": {
+      "cwd": "/workspace/project",
+      "source_paths": "docs/intro.md, docs/usage.md",
+      "pdf_requirements": "A4, include table of contents, output name user-guide.pdf",
+      "output_format": "Step-by-step commands and verification steps."
+    },
+    "blocks": {
+      "_tool_hints": "Suggest pandoc if available."
+    }
+  },
+  {
+    "id": "tool_section",
+    "version": "v1",
+    "vars": {
+      "tools": "rg (ripgrep), fd, pandoc",
+      "usage_policies": "Use read-only commands unless explicitly asked to modify files.",
+      "output_format": "Markdown section with tool descriptions and safety notes."
+    },
+    "blocks": {
+      "_tool_hints": "Call out flags for recursive search."
+    }
+  },
+  {
+    "id": "workspace_section",
+    "version": "v1",
+    "vars": {
+      "title": "Project Workspace",
+      "description": "Repository for the promptir demo datasets and tooling.",
+      "directory_listing": "data/demo_datasets/ (demo prompts and manifests)\nsrc/promptir/ (runtime library)\nscripts/ (helper scripts)",
+      "output_format": "Markdown summary with bullet points."
+    },
+    "blocks": {
+      "_rag_context": "Highlight where manifests live."
+    }
+  }
+]

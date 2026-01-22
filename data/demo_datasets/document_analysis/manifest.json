@@ -1,0 +1,222 @@
+{
+  "prompts": [
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        },
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "ce45d603a7571e19edc0b80d01ff9d56b2171681af28c743bc2c4e85532eae40",
+      "id": "document_analyze_map_reduce",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou perform a map-reduce style analysis over multiple documents.\nFirst map each document independently, then reduce into a unified synthesis.",
+          "role": "system"
+        },
+        {
+          "content": "Analysis goal:\n{{analysis_goal}}\n\nDocuments:\n{{documents}}\n\nMap instructions:\n{{map_instructions}}\n\nReduce instructions:\n{{reduce_instructions}}\n\nAdditional context:\n{{_rag_context}}\n\nTool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "document_analysis",
+        "owner": "core",
+        "scope": "map_reduce"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "_tool_hints",
+        "analysis_goal",
+        "documents",
+        "map_instructions",
+        "output_format",
+        "reduce_instructions"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        },
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "0956ad822ef0f2c7a8bb3287b0534633e99caf0474c2ed743189ce5ba6949274",
+      "id": "document_analyze_multi",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou analyze multiple documents and synthesize findings across them.\nAdjust depth based on the context mode (small or big) and keep sources distinct.",
+          "role": "system"
+        },
+        {
+          "content": "Analysis goal:\n{{analysis_goal}}\n\nContext mode:\n{{context_mode}}\n\nDocuments:\n{{documents}}\n\nAdditional context:\n{{_rag_context}}\n\nTool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "document_analysis",
+        "owner": "core",
+        "scope": "multi_document"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "_tool_hints",
+        "analysis_goal",
+        "context_mode",
+        "documents",
+        "output_format"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        },
+        "_tool_hints": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "91cf120957c5fe7818943cec58d485dd988e70729c77ab6ccedd0c09e35d7710",
+      "id": "document_analyze_single",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou analyze a single document and produce a clear, structured response.\nPrioritize accuracy, cite evidence from the document, and follow the requested format.",
+          "role": "system"
+        },
+        {
+          "content": "Analysis goal:\n{{analysis_goal}}\n\nDocument:\n{{document}}\n\nAdditional context:\n{{_rag_context}}\n\nTool hints:\n{{_tool_hints}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "document_analysis",
+        "owner": "core",
+        "scope": "single_document"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "_tool_hints",
+        "analysis_goal",
+        "document",
+        "output_format"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "df1478d5d7a21de739031c72c0f976c50d19f0f36c79957d940b06bb74fec1ca",
+      "id": "document_diff",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou compare two documents and identify meaningful differences and similarities.\nFocus on the requested comparison scope and provide evidence from both documents.",
+          "role": "system"
+        },
+        {
+          "content": "Comparison focus:\n{{comparison_focus}}\n\nDocument A:\n{{document_a}}\n\nDocument B:\n{{document_b}}\n\nAdditional context:\n{{_rag_context}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "document_analysis",
+        "owner": "core",
+        "scope": "diff"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "comparison_focus",
+        "document_a",
+        "document_b",
+        "output_format"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "fe1c29a0c74c1122b994e6ea0fdec584bd784d37ec8a19023d73fa915b957a64",
+      "id": "document_info_verify",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou verify whether specific information types appear in the document.\nAnswer with clear yes/no/partial coverage and cite supporting passages.",
+          "role": "system"
+        },
+        {
+          "content": "Information types to verify:\n{{information_types}}\n\nDocument:\n{{document}}\n\nAdditional context:\n{{_rag_context}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "document_analysis",
+        "owner": "core",
+        "scope": "information_verification"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "document",
+        "information_types",
+        "output_format"
+      ],
+      "version": "v1"
+    },
+    {
+      "blocks": {
+        "_rag_context": {
+          "default": "",
+          "optional": true
+        }
+      },
+      "hash": "2785f7029ecc731cafba6fafdd43d6d320941bb1ded7d2afbda57cbc8384c203",
+      "id": "document_questions_extract",
+      "messages": [
+        {
+          "content": "Follow company policy.\nBe concise.\n\nYou extract a focused set of questions implied or stated in the document.\nOrganize by question type and include supporting evidence when available.",
+          "role": "system"
+        },
+        {
+          "content": "Question types:\n{{question_types}}\n\nDocument:\n{{document}}\n\nAdditional context:\n{{_rag_context}}\n\nOutput format:\n{{output_format}}",
+          "role": "user"
+        }
+      ],
+      "metadata": {
+        "intent": "document_analysis",
+        "owner": "core",
+        "scope": "question_extraction"
+      },
+      "template_engine": "simple",
+      "variables": [
+        "_rag_context",
+        "document",
+        "output_format",
+        "question_types"
+      ],
+      "version": "v1"
+    }
+  ],
+  "schema_version": 1
+}
