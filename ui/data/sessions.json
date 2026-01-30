@@ -1,0 +1,22 @@
+{
+  "sessions": [
+    {
+      "id": "demo-docs",
+      "name": "Document Analysis",
+      "manifest_path": "data/demo_datasets/document_analysis/manifest.json",
+      "prompts_dir": "data/demo_datasets/document_analysis/prompts"
+    },
+    {
+      "id": "demo-local",
+      "name": "Local Operations",
+      "manifest_path": "data/demo_datasets/local_operations/manifest.json",
+      "prompts_dir": "data/demo_datasets/local_operations/prompts"
+    },
+    {
+      "id": "main",
+      "name": "Main Prompts",
+      "manifest_path": "dist/llm_prompts/manifest.json",
+      "prompts_dir": "src/llm/prompts"
+    }
+  ]
+}
