@@ -1,10 +1,10 @@
-.PHONY: help install dev test lint format typecheck check clean
+.PHONY: help install dev test lint format typecheck check clean build docker-build docker-run
 
 help:
 	@echo "promptir UI Development Commands"
 	@echo ""
 	@echo "Setup:"
-	@echo "  make install    Install all dependencies"
+	@echo "  make install    Install all dependencies (requires uv and npm)"
 	@echo "  make dev        Start development servers"
 	@echo ""
 	@echo "Quality:"
@@ -15,12 +15,16 @@ help:
 	@echo "  make check      Run all checks (lint + type + test)"
 	@echo ""
 	@echo "Build:"
-	@echo "  make build      Build for production"
+	@echo "  make build      Build frontend for production"
 	@echo "  make clean      Clean build artifacts"
+	@echo ""
+	@echo "Docker:"
+	@echo "  make docker-build   Build Docker image"
+	@echo "  make docker-run     Run Docker container"
 
 # Setup
 install:
-	pip install -e ".[dev]"
+	uv sync --dev
 	cd frontend && npm install
 
 # Development
@@ -28,24 +32,35 @@ dev:
 	@echo "Starting backend on http://localhost:8000"
 	@echo "Starting frontend on http://localhost:5173"
 	@(trap 'kill 0' SIGINT; \
-		uvicorn backend.server:app --reload --port 8000 & \
+		uv run uvicorn backend.server:app --reload --port 8000 & \
 		cd frontend && npm run dev & \
 		wait)
 
+# Backend only
+dev-backend:
+	uv run uvicorn backend.server:app --reload --port 8000
+
+# Frontend only
+dev-frontend:
+	cd frontend && npm run dev
+
 # Backend commands
 lint-backend:
-	ruff check backend/
-	ruff format --check backend/
+	uv run ruff check backend/
+	uv run ruff format --check backend/
 
 format-backend:
-	ruff format backend/
-	ruff check --fix backend/
+	uv run ruff format backend/
+	uv run ruff check --fix backend/
 
 typecheck-backend:
-	pyright backend/
+	uv run pyright backend/
 
 test-backend:
-	pytest backend/tests/ -v
+	uv run pytest backend/tests/ -v
+
+test-backend-cov:
+	uv run pytest backend/tests/ -v --cov=backend --cov-report=term-missing
 
 # Frontend commands
 lint-frontend:
@@ -59,6 +74,9 @@ typecheck-frontend:
 
 test-frontend:
 	cd frontend && npm run test
+
+test-frontend-cov:
+	cd frontend && npm run test:coverage
 
 # Combined commands
 lint: lint-backend lint-frontend
@@ -75,6 +93,7 @@ check: lint typecheck test
 build:
 	cd frontend && npm run build
 
+# Clean
 clean:
 	rm -rf frontend/dist
 	rm -rf frontend/node_modules/.cache
@@ -82,3 +101,14 @@ clean:
 	rm -rf backend/tests/__pycache__
 	rm -rf .pytest_cache
 	rm -rf .ruff_cache
+	rm -rf .venv
+
+# Docker
+docker-build:
+	docker build -t promptir-ui .
+
+docker-run:
+	docker run -p 8000:8000 \
+		-e OPENAI_API_KEY=$${OPENAI_API_KEY} \
+		-v $$(pwd)/../data:/app/data:ro \
+		promptir-ui
