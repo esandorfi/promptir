@@ -1,12 +1,11 @@
 """Tests for configuration logic."""
 
 import json
-import pytest
+
 from backend.config import (
     Settings,
-    SessionConfig,
-    load_sessions,
     get_session_by_id,
+    load_sessions,
 )
 
 

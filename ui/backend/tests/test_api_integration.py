@@ -1,16 +1,16 @@
 """Integration tests for API endpoints using demo datasets."""
 
-import json
 import sys
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 
 # Add src to path for promptir imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "src"))
 
-from backend.server import app
 from backend.config import Settings, get_settings
+from backend.server import app
 
 
 @pytest.fixture
@@ -160,7 +160,7 @@ class TestRenderAPI:
 
         # Build minimal inputs
         vars_input = {v: f"test_{v}" for v in prompt["variables"]}
-        blocks_input = {b: "" for b in prompt["blocks"].keys()}
+        blocks_input = {b: "" for b in prompt["blocks"]}
 
         response = demo_client.post(
             "/api/sessions/demo-docs/render",

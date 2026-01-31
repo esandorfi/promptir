@@ -3,11 +3,12 @@
 import json
 import tempfile
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.server import app
 from backend.config import Settings, get_settings
+from backend.server import app
 
 
 @pytest.fixture

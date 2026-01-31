@@ -1,8 +1,9 @@
 """Session management endpoints."""
 
-from fastapi import APIRouter, HTTPException, Depends
-from ..config import Settings, get_settings, load_sessions, get_session_by_id
-from ..schemas import SessionResponse, SessionListResponse
+from fastapi import APIRouter, Depends, HTTPException
+
+from ..config import Settings, get_session_by_id, get_settings, load_sessions
+from ..schemas import SessionListResponse, SessionResponse
 
 router = APIRouter()
 

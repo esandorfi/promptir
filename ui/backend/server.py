@@ -1,11 +1,12 @@
 """FastAPI server for promptir UI."""
 
 from pathlib import Path
-from fastapi import FastAPI, HTTPException, Depends
+
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from .config import Settings, get_settings, get_session_by_id
+from .config import Settings, get_session_by_id, get_settings
 from .routes import api_router
 from .schemas import DiffResponse
 from .services.diff_service import compute_diff

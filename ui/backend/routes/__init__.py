@@ -1,10 +1,11 @@
 """API routes."""
 
 from fastapi import APIRouter
-from .sessions import router as sessions_router
-from .prompts import router as prompts_router
+
 from .compile import router as compile_router
 from .infer import router as infer_router
+from .prompts import router as prompts_router
+from .sessions import router as sessions_router
 from .testcases import router as testcases_router
 
 api_router = APIRouter()

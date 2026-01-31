@@ -1,6 +1,5 @@
 """Tests for diff service logic."""
 
-import pytest
 from backend.services.diff_service import compute_diff
 
 
@@ -72,5 +71,5 @@ Same content'''
         result = compute_diff(str(temp_dir / "prompts"), "my_prompt", "v1", "v2")
         assert result is not None
         # Only version field changed in frontmatter
-        frontmatter_diff, template_diff = result
+        _frontmatter_diff, template_diff = result
         assert template_diff == ""  # Template is identical

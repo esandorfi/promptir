@@ -1,9 +1,9 @@
 """Prompt file and manifest operations."""
 
 import json
-import re
 from pathlib import Path
-from ..schemas import PromptSource, PromptSummary, BlockSpec
+
+from ..schemas import BlockSpec, PromptSource, PromptSummary
 
 
 def load_manifest(manifest_path: str) -> dict | None:

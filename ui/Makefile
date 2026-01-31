@@ -1,31 +1,42 @@
-.PHONY: help install dev test lint format typecheck check clean build docker-build docker-run
+.PHONY: help install dev test lint format typecheck check clean build docker-build docker-run pre-commit-install pre-commit
 
 help:
 	@echo "promptir UI Development Commands"
 	@echo ""
 	@echo "Setup:"
-	@echo "  make install    Install all dependencies (requires uv and npm)"
-	@echo "  make dev        Start development servers"
+	@echo "  make install           Install all dependencies (requires uv and npm)"
+	@echo "  make pre-commit-install Install pre-commit hooks"
+	@echo "  make dev               Start development servers"
 	@echo ""
 	@echo "Quality:"
-	@echo "  make lint       Run linters"
-	@echo "  make format     Format code"
-	@echo "  make typecheck  Run type checkers"
-	@echo "  make test       Run all tests"
-	@echo "  make check      Run all checks (lint + type + test)"
+	@echo "  make lint              Run linters"
+	@echo "  make format            Format code"
+	@echo "  make typecheck         Run type checkers"
+	@echo "  make test              Run all tests"
+	@echo "  make check             Run all checks (lint + type + test)"
+	@echo "  make pre-commit        Run pre-commit on all files"
 	@echo ""
 	@echo "Build:"
-	@echo "  make build      Build frontend for production"
-	@echo "  make clean      Clean build artifacts"
+	@echo "  make build             Build frontend for production"
+	@echo "  make clean             Clean build artifacts"
 	@echo ""
 	@echo "Docker:"
-	@echo "  make docker-build   Build Docker image"
-	@echo "  make docker-run     Run Docker container"
+	@echo "  make docker-build      Build Docker image"
+	@echo "  make docker-run        Run Docker container"
 
 # Setup
 install:
 	uv sync --dev
 	cd frontend && npm install
+	@echo ""
+	@echo "Run 'make pre-commit-install' to enable pre-commit hooks"
+
+# Pre-commit hooks
+pre-commit-install:
+	uv run pre-commit install
+
+pre-commit:
+	uv run pre-commit run --all-files
 
 # Development
 dev:

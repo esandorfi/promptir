@@ -2,23 +2,24 @@
 
 import sys
 from pathlib import Path
-from fastapi import APIRouter, HTTPException, Depends
+
+from fastapi import APIRouter, Depends, HTTPException
 
 # Add parent to path to import promptir
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "src"))
 
-from promptir import compile_prompts, PromptRegistry
+from promptir import PromptRegistry, compile_prompts
 from promptir.errors import PromptCompileError, PromptInputError
 
-from ..config import Settings, get_settings, get_session_by_id
+from ..config import Settings, get_session_by_id, get_settings
 from ..schemas import (
     CompileResult,
-    ValidationResult,
-    ValidationError,
-    ValidationWarning,
+    PromptMessage,
     RenderRequest,
     RenderResponse,
-    PromptMessage,
+    ValidationError,
+    ValidationResult,
+    ValidationWarning,
 )
 
 router = APIRouter()
@@ -119,6 +120,6 @@ def render_prompt(
         return RenderResponse(messages=messages, token_estimate=token_estimate)
 
     except PromptInputError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e)) from None
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from None

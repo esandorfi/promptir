@@ -1,7 +1,8 @@
 """LLM inference endpoints."""
 
 import time
-from fastapi import APIRouter, HTTPException, Depends
+
+from fastapi import APIRouter, Depends, HTTPException
 from openai import OpenAI, OpenAIError
 
 from ..config import Settings, get_settings
@@ -70,7 +71,7 @@ def run_inference(
             max_tokens=request.max_tokens,
         )
     except OpenAIError as e:
-        raise HTTPException(status_code=500, detail=f"LLM API error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"LLM API error: {e!s}") from None
 
     latency_ms = int((time.perf_counter() - start) * 1000)
 

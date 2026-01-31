@@ -1,25 +1,26 @@
 """Prompt CRUD endpoints."""
 
-import json
 from pathlib import Path
-from fastapi import APIRouter, HTTPException, Depends
-from ..config import Settings, get_settings, get_session_by_id
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from ..config import Settings, get_session_by_id, get_settings
 from ..schemas import (
-    PromptSummary,
+    BlockSpec,
+    PromptCreateRequest,
     PromptDetail,
-    PromptSource,
     PromptListResponse,
     PromptMessage,
+    PromptSource,
+    PromptSummary,
     PromptUpdateRequest,
-    PromptCreateRequest,
-    BlockSpec,
 )
 from ..services.prompt_service import (
+    get_includes,
+    list_prompt_files,
     load_manifest,
     load_prompt_source,
     save_prompt_source,
-    list_prompt_files,
-    get_includes,
 )
 
 router = APIRouter()

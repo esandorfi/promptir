@@ -1,16 +1,14 @@
 """Tests for prompt service logic."""
 
 import json
-from pathlib import Path
-import pytest
 
 from backend.services.prompt_service import (
+    get_includes,
+    list_prompt_files,
     load_manifest,
     load_prompt_source,
-    save_prompt_source,
-    list_prompt_files,
-    get_includes,
     parse_prompt_content,
+    save_prompt_source,
 )
 
 
@@ -46,7 +44,7 @@ Hello'''
 {invalid json}
 ---
 # system'''
-        fm, body = parse_prompt_content(content)
+        fm, _body = parse_prompt_content(content)
         assert fm is None
 
     def test_unclosed_frontmatter(self):
@@ -54,7 +52,7 @@ Hello'''
         content = '''---
 {"id": "test"}
 # system'''
-        fm, body = parse_prompt_content(content)
+        fm, _body = parse_prompt_content(content)
         assert fm is None
 
 
