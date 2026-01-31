@@ -1,0 +1,49 @@
+# Pre-commit configuration for promptir UI
+# Install: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Backend (Python)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.6
+    hooks:
+      - id: ruff
+        args: [--fix]
+        files: ^ui/backend/
+      - id: ruff-format
+        files: ^ui/backend/
+
+  # Frontend (TypeScript/JavaScript)
+  - repo: local
+    hooks:
+      - id: frontend-lint
+        name: Frontend ESLint
+        entry: bash -c 'cd ui/frontend && npm run lint'
+        language: system
+        files: ^ui/frontend/src/.*\.(ts|tsx)$
+        pass_filenames: false
+
+      - id: frontend-format
+        name: Frontend Prettier
+        entry: bash -c 'cd ui/frontend && npm run format:check'
+        language: system
+        files: ^ui/frontend/src/.*\.(ts|tsx|css)$
+        pass_filenames: false
+
+      - id: frontend-typecheck
+        name: Frontend TypeScript
+        entry: bash -c 'cd ui/frontend && npm run typecheck'
+        language: system
+        files: ^ui/frontend/src/.*\.(ts|tsx)$
+        pass_filenames: false
+
+  # General
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=500']
