@@ -17,14 +17,14 @@ class TestParsePromptContent:
 
     def test_valid_frontmatter(self):
         """Should parse valid JSON frontmatter."""
-        content = '''---
+        content = """---
 {
   "id": "test",
   "version": "v1"
 }
 ---
 # system
-Hello'''
+Hello"""
         fm, body = parse_prompt_content(content)
         assert fm is not None
         assert fm["id"] == "test"
@@ -40,18 +40,18 @@ Hello'''
 
     def test_invalid_json_frontmatter(self):
         """Should handle invalid JSON in frontmatter."""
-        content = '''---
+        content = """---
 {invalid json}
 ---
-# system'''
+# system"""
         fm, _body = parse_prompt_content(content)
         assert fm is None
 
     def test_unclosed_frontmatter(self):
         """Should handle unclosed frontmatter."""
-        content = '''---
+        content = """---
 {"id": "test"}
-# system'''
+# system"""
         fm, _body = parse_prompt_content(content)
         assert fm is None
 
@@ -62,10 +62,9 @@ class TestLoadManifest:
     def test_load_existing_manifest(self, temp_dir):
         """Should load existing manifest file."""
         manifest_path = temp_dir / "manifest.json"
-        manifest_path.write_text(json.dumps({
-            "schema_version": 1,
-            "prompts": [{"id": "test", "version": "v1"}]
-        }))
+        manifest_path.write_text(
+            json.dumps({"schema_version": 1, "prompts": [{"id": "test", "version": "v1"}]})
+        )
 
         result = load_manifest(str(manifest_path))
         assert result is not None
@@ -117,9 +116,7 @@ class TestSavePromptSource:
         prompts_dir = temp_dir / "prompts"
         prompts_dir.mkdir()
 
-        result = save_prompt_source(
-            str(prompts_dir), "new_prompt", "v1", "# system\nHello"
-        )
+        result = save_prompt_source(str(prompts_dir), "new_prompt", "v1", "# system\nHello")
 
         assert result is not None
         assert result.id == "new_prompt"
@@ -131,9 +128,7 @@ class TestSavePromptSource:
         prompts_dir.mkdir(parents=True)
         (prompts_dir / "v1.md").write_text("old content")
 
-        result = save_prompt_source(
-            str(temp_dir / "prompts"), "existing", "v1", "new content"
-        )
+        result = save_prompt_source(str(temp_dir / "prompts"), "existing", "v1", "new content")
 
         assert result is not None
         assert (temp_dir / "prompts" / "existing" / "v1.md").read_text() == "new content"

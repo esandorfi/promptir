@@ -21,7 +21,7 @@ def temp_dir():
 @pytest.fixture
 def sample_prompt_content():
     """Sample prompt content for testing."""
-    return '''---
+    return """---
 {
   "id": "test_prompt",
   "version": "v1",
@@ -40,7 +40,7 @@ You are a helpful assistant.
 Question: {{question}}
 Context: {{context}}
 RAG: {{_rag_context}}
-'''
+"""
 
 
 @pytest.fixture
@@ -59,14 +59,20 @@ def sample_session_config(temp_dir, sample_prompt_content):
 
     # Create sessions config
     sessions_path = temp_dir / "sessions.json"
-    sessions_path.write_text(json.dumps({
-        "sessions": [{
-            "id": "test-session",
-            "name": "Test Session",
-            "manifest_path": str(manifest_path),
-            "prompts_dir": str(prompts_dir)
-        }]
-    }))
+    sessions_path.write_text(
+        json.dumps(
+            {
+                "sessions": [
+                    {
+                        "id": "test-session",
+                        "name": "Test Session",
+                        "manifest_path": str(manifest_path),
+                        "prompts_dir": str(prompts_dir),
+                    }
+                ]
+            }
+        )
+    )
 
     # Create testcases dir
     testcases_dir = temp_dir / "testcases"
@@ -94,6 +100,7 @@ def test_settings(sample_session_config):
 @pytest.fixture
 def client(test_settings):
     """Create a test client with overridden settings."""
+
     def override_settings():
         return test_settings
 

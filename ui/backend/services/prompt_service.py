@@ -90,12 +90,10 @@ def list_prompt_files(prompts_dir: str) -> list[PromptSummary]:
                             template_engine=frontmatter.get("template_engine", "simple"),
                             metadata=frontmatter.get("metadata", {}),
                             variables=[
-                                v for v in frontmatter.get("variables", [])
-                                if not v.startswith("_")
+                                v for v in frontmatter.get("variables", []) if not v.startswith("_")
                             ],
                             blocks={
-                                k: BlockSpec(**v)
-                                for k, v in frontmatter.get("blocks", {}).items()
+                                k: BlockSpec(**v) for k, v in frontmatter.get("blocks", {}).items()
                             },
                         )
                     )
@@ -121,7 +119,9 @@ def get_includes(prompts_dir: str) -> list[PromptSummary]:
                     PromptSummary(
                         id=include_dir.name,
                         version=version,
-                        template_engine=frontmatter.get("template_engine", "simple") if frontmatter else "simple",
+                        template_engine=frontmatter.get("template_engine", "simple")
+                        if frontmatter
+                        else "simple",
                         metadata=frontmatter.get("metadata", {}) if frontmatter else {},
                         variables=[],
                         blocks={},
@@ -175,7 +175,7 @@ def parse_prompt_content(content: str) -> tuple[dict | None, str]:
 
     frontmatter_lines = lines[1:end_idx]
     frontmatter_str = "\n".join(frontmatter_lines)
-    body = "\n".join(lines[end_idx + 1:])
+    body = "\n".join(lines[end_idx + 1 :])
 
     try:
         frontmatter = json.loads(frontmatter_str)

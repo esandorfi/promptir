@@ -46,9 +46,7 @@ def get_diff(
 
     result = compute_diff(session.prompts_dir, prompt_id, v1, v2)
     if not result:
-        raise HTTPException(
-            status_code=404, detail=f"Could not compute diff for {prompt_id}"
-        )
+        raise HTTPException(status_code=404, detail=f"Could not compute diff for {prompt_id}")
 
     frontmatter_diff, template_diff = result
     return DiffResponse(
@@ -75,4 +73,5 @@ if static_path.exists():
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)

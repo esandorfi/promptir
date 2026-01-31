@@ -35,22 +35,26 @@ class TestLoadSessions:
     def test_load_valid_sessions(self, temp_dir):
         """Should load sessions from JSON file."""
         sessions_path = temp_dir / "sessions.json"
-        sessions_path.write_text(json.dumps({
-            "sessions": [
+        sessions_path.write_text(
+            json.dumps(
                 {
-                    "id": "session-1",
-                    "name": "Session One",
-                    "manifest_path": "/path/to/manifest.json",
-                    "prompts_dir": "/path/to/prompts"
-                },
-                {
-                    "id": "session-2",
-                    "name": "Session Two",
-                    "manifest_path": "/path/to/manifest2.json",
-                    "prompts_dir": "/path/to/prompts2"
+                    "sessions": [
+                        {
+                            "id": "session-1",
+                            "name": "Session One",
+                            "manifest_path": "/path/to/manifest.json",
+                            "prompts_dir": "/path/to/prompts",
+                        },
+                        {
+                            "id": "session-2",
+                            "name": "Session Two",
+                            "manifest_path": "/path/to/manifest2.json",
+                            "prompts_dir": "/path/to/prompts2",
+                        },
+                    ]
                 }
-            ]
-        }))
+            )
+        )
 
         settings = Settings(sessions_path=str(sessions_path))
         sessions = load_sessions(settings)
@@ -81,11 +85,20 @@ class TestGetSessionById:
     def test_get_existing_session(self, temp_dir):
         """Should find session by ID."""
         sessions_path = temp_dir / "sessions.json"
-        sessions_path.write_text(json.dumps({
-            "sessions": [
-                {"id": "target", "name": "Target", "manifest_path": "/m", "prompts_dir": "/p"}
-            ]
-        }))
+        sessions_path.write_text(
+            json.dumps(
+                {
+                    "sessions": [
+                        {
+                            "id": "target",
+                            "name": "Target",
+                            "manifest_path": "/m",
+                            "prompts_dir": "/p",
+                        }
+                    ]
+                }
+            )
+        )
 
         settings = Settings(sessions_path=str(sessions_path))
         session = get_session_by_id(settings, "target")

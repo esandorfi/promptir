@@ -34,6 +34,7 @@ def demo_settings():
 @pytest.fixture
 def demo_client(demo_settings):
     """Test client with demo settings."""
+
     def override_settings():
         return demo_settings
 
@@ -169,7 +170,7 @@ class TestRenderAPI:
                 "version": prompt["version"],
                 "vars": vars_input,
                 "blocks": blocks_input,
-            }
+            },
         )
         assert response.status_code == 200
 

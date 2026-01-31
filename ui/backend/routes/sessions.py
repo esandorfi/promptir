@@ -26,9 +26,7 @@ def list_sessions(settings: Settings = Depends(get_settings)) -> SessionListResp
 
 
 @router.get("/api/sessions/{session_id}", response_model=SessionResponse)
-def get_session(
-    session_id: str, settings: Settings = Depends(get_settings)
-) -> SessionResponse:
+def get_session(session_id: str, settings: Settings = Depends(get_settings)) -> SessionResponse:
     """Get a specific session by ID."""
     session = get_session_by_id(settings, session_id)
     if not session:

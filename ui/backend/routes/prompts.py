@@ -27,9 +27,7 @@ router = APIRouter()
 
 
 @router.get("/api/sessions/{session_id}/prompts", response_model=PromptListResponse)
-def list_prompts(
-    session_id: str, settings: Settings = Depends(get_settings)
-) -> PromptListResponse:
+def list_prompts(session_id: str, settings: Settings = Depends(get_settings)) -> PromptListResponse:
     """List all prompts in a session."""
     session = get_session_by_id(settings, session_id)
     if not session:
@@ -48,9 +46,7 @@ def list_prompts(
                 template_engine=p.get("template_engine", "simple"),
                 metadata=p.get("metadata", {}),
                 variables=[v for v in p.get("variables", []) if not v.startswith("_")],
-                blocks={
-                    k: BlockSpec(**v) for k, v in p.get("blocks", {}).items()
-                },
+                blocks={k: BlockSpec(**v) for k, v in p.get("blocks", {}).items()},
             )
             for p in manifest.get("prompts", [])
         ]
@@ -73,9 +69,7 @@ def get_prompt_latest(
         raise HTTPException(status_code=404, detail="Manifest not found")
 
     # Find latest version
-    versions = [
-        p for p in manifest.get("prompts", []) if p["id"] == prompt_id
-    ]
+    versions = [p for p in manifest.get("prompts", []) if p["id"] == prompt_id]
     if not versions:
         raise HTTPException(status_code=404, detail=f"Prompt not found: {prompt_id}")
 
@@ -111,9 +105,7 @@ def get_prompt_version(
         None,
     )
     if not prompt:
-        raise HTTPException(
-            status_code=404, detail=f"Prompt not found: {prompt_id}@{version}"
-        )
+        raise HTTPException(status_code=404, detail=f"Prompt not found: {prompt_id}@{version}")
 
     return _prompt_to_detail(prompt)
 
@@ -132,9 +124,7 @@ def get_prompt_source(
 
     source = load_prompt_source(session.prompts_dir, prompt_id, version)
     if not source:
-        raise HTTPException(
-            status_code=404, detail=f"Source not found: {prompt_id}@{version}"
-        )
+        raise HTTPException(status_code=404, detail=f"Source not found: {prompt_id}@{version}")
 
     return source
 
@@ -152,9 +142,7 @@ def update_prompt(
     if not session:
         raise HTTPException(status_code=404, detail=f"Session not found: {session_id}")
 
-    result = save_prompt_source(
-        session.prompts_dir, prompt_id, version, request.content
-    )
+    result = save_prompt_source(session.prompts_dir, prompt_id, version, request.content)
     if not result:
         raise HTTPException(status_code=500, detail="Failed to save prompt")
 
@@ -180,9 +168,7 @@ def create_prompt(
             detail=f"Prompt already exists: {request.id}@{request.version}",
         )
 
-    result = save_prompt_source(
-        session.prompts_dir, request.id, request.version, request.content
-    )
+    result = save_prompt_source(session.prompts_dir, request.id, request.version, request.content)
     if not result:
         raise HTTPException(status_code=500, detail="Failed to create prompt")
 
@@ -205,9 +191,7 @@ def delete_prompt(
     prompt_path = prompts_dir / prompt_id / f"{version}.md"
 
     if not prompt_path.exists():
-        raise HTTPException(
-            status_code=404, detail=f"Prompt not found: {prompt_id}@{version}"
-        )
+        raise HTTPException(status_code=404, detail=f"Prompt not found: {prompt_id}@{version}")
 
     prompt_path.unlink()
 

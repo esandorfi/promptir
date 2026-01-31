@@ -121,9 +121,7 @@ def update_testcase(
     data = _load_testcases(path)
 
     testcases = data.get("test_cases", [])
-    tc_index = next(
-        (i for i, tc in enumerate(testcases) if tc["id"] == testcase_id), None
-    )
+    tc_index = next((i for i, tc in enumerate(testcases) if tc["id"] == testcase_id), None)
 
     if tc_index is None:
         raise HTTPException(status_code=404, detail=f"Test case not found: {testcase_id}")
@@ -143,9 +141,7 @@ def update_testcase(
     return TestCase(**tc)
 
 
-@router.delete(
-    "/api/sessions/{session_id}/prompts/{prompt_id}/{version}/testcases/{testcase_id}"
-)
+@router.delete("/api/sessions/{session_id}/prompts/{prompt_id}/{version}/testcases/{testcase_id}")
 def delete_testcase(
     session_id: str,
     prompt_id: str,

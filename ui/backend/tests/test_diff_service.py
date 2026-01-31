@@ -12,7 +12,7 @@ class TestComputeDiff:
         prompts_dir.mkdir(parents=True)
 
         # Version 1
-        (prompts_dir / "v1.md").write_text('''---
+        (prompts_dir / "v1.md").write_text("""---
 {
   "id": "my_prompt",
   "version": "v1",
@@ -20,10 +20,10 @@ class TestComputeDiff:
 }
 ---
 # system
-Hello v1''')
+Hello v1""")
 
         # Version 2
-        (prompts_dir / "v2.md").write_text('''---
+        (prompts_dir / "v2.md").write_text("""---
 {
   "id": "my_prompt",
   "version": "v2",
@@ -31,7 +31,7 @@ Hello v1''')
 }
 ---
 # system
-Hello v2''')
+Hello v2""")
 
         result = compute_diff(str(temp_dir / "prompts"), "my_prompt", "v1", "v2")
 
@@ -59,11 +59,11 @@ Hello v2''')
         prompts_dir = temp_dir / "prompts" / "my_prompt"
         prompts_dir.mkdir(parents=True)
 
-        content = '''---
+        content = """---
 {"id": "my_prompt", "version": "v1"}
 ---
 # system
-Same content'''
+Same content"""
 
         (prompts_dir / "v1.md").write_text(content)
         (prompts_dir / "v2.md").write_text(content.replace("v1", "v2"))

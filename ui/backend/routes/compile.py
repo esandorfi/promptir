@@ -26,9 +26,7 @@ router = APIRouter()
 
 
 @router.post("/api/sessions/{session_id}/compile", response_model=CompileResult)
-def compile_session(
-    session_id: str, settings: Settings = Depends(get_settings)
-) -> CompileResult:
+def compile_session(session_id: str, settings: Settings = Depends(get_settings)) -> CompileResult:
     """Compile all prompts in a session."""
     session = get_session_by_id(settings, session_id)
     if not session:
@@ -109,9 +107,7 @@ def render_prompt(
             blocks=request.blocks,
         )
 
-        messages = [
-            PromptMessage(role=m.role, content=m.content) for m in rendered.messages
-        ]
+        messages = [PromptMessage(role=m.role, content=m.content) for m in rendered.messages]
 
         # Estimate tokens (rough: ~4 chars per token)
         total_chars = sum(len(m.content) for m in messages)
