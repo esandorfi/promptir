@@ -13,7 +13,7 @@ RUN npm run build
 
 
 # Production stage
-FROM python:3.12-slim AS production
+FROM python:3.11-slim AS production
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
